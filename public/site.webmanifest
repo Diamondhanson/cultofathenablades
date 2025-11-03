@@ -1,0 +1,22 @@
+{
+  "name": "Cult of Athena Blades",
+  "short_name": "COA Blades",
+  "description": "Premium swords, katanas, and daggers for collectors and martial artists",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8b0000",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+

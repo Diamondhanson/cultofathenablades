@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://cultofathenablades.com/sitemap.xml
+
+# Disallow search and checkout pages
+Disallow: /cart
+Disallow: /checkout
+Disallow: /order-confirmation
+
+# Crawl delay (optional)
+Crawl-delay: 1
+

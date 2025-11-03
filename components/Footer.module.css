@@ -1,0 +1,134 @@
+.footer {
+  background-color: var(--secondary-color);
+  color: var(--background);
+  padding: var(--spacing-3xl) 0 var(--spacing-xl);
+  margin-top: var(--spacing-3xl);
+}
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+}
+
+.brandSection {
+  max-width: 400px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+}
+
+.brandIcon {
+  font-size: var(--font-size-3xl);
+}
+
+.brandName {
+  color: var(--accent-gold);
+}
+
+.brandDescription {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+}
+
+.socialLinks {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--background);
+  transition: all var(--transition-base);
+}
+
+.socialLink:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+  color: white;
+}
+
+.linkSection {
+  /* Spacing handled by grid */
+}
+
+.linkTitle {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-gold);
+  margin-bottom: var(--spacing-md);
+}
+
+.linkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.linkList li {
+  margin-bottom: var(--spacing-sm);
+}
+
+.link {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-sm);
+  transition: color var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--accent-gold);
+}
+
+.bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: var(--spacing-lg);
+  text-align: center;
+}
+
+.copyright {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.disclaimer {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+}
+

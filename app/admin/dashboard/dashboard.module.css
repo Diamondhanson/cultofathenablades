@@ -1,0 +1,267 @@
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: #1a1a1a;
+  color: white;
+  padding: 0;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebarHeader {
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 0.25rem;
+}
+
+.logoSubtext {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav {
+  padding: 1rem 0;
+}
+
+.navSection {
+  margin-bottom: 1.5rem;
+}
+
+.navSectionTitle {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  color: #ccc;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 0.9375rem;
+}
+
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.navLink.active {
+  background: rgba(212, 175, 55, 0.1);
+  color: #d4af37;
+  border-right: 3px solid #d4af37;
+}
+
+.navIcon {
+  font-size: 1.25rem;
+}
+
+.logoutButton {
+  margin: 1rem 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  width: calc(100% - 3rem);
+}
+
+.logoutButton:hover {
+  background: #d4af37;
+  color: white;
+}
+
+/* Main Content */
+.main {
+  flex: 1;
+  margin-left: 260px;
+  padding: 2rem;
+}
+
+.header {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.statCard {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.statHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.statIcon {
+  font-size: 2rem;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  color: #666;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Quick Actions */
+.quickActions {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.actionButton:hover {
+  background: #f0f0f0;
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+.actionIcon {
+  font-size: 1.5rem;
+}
+
+/* Recent Activity */
+.recentActivity {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.activityItem {
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activityText {
+  color: #1a1a1a;
+  font-size: 0.875rem;
+}
+
+.activityTime {
+  color: #999;
+  font-size: 0.75rem;
+}
+
