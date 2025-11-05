@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
-import { Cinzel, Inter } from 'next/font/google';
+import { Teko, Inter } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import { CartProvider } from '@/lib/cart/CartProvider';
 import { ToastProvider } from '@/lib/ui/ToastProvider';
 import Footer from '@/components/Footer';
 import '@/styles/globals.css';
 
-const cinzel = Cinzel({
+const teko = Teko({
   subsets: ['latin'],
   variable: '--font-primary',
+  weight: ['400','500','600','700'],
   display: 'swap',
 });
 
@@ -29,6 +30,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'Cult of Athena Blades' }],
   creator: 'Cult of Athena Blades',
   publisher: 'Cult of Athena Blades',
+  alternates: {
+    canonical: 'https://cultofathenablades.com',
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -43,9 +47,9 @@ export const metadata: Metadata = {
     description: 'Discover premium quality swords, katanas, and daggers. Authentic blades for collectors, martial artists, and history enthusiasts.',
     images: [
       {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
+        url: '/logo.png',
+        width: 512,
+        height: 512,
         alt: 'Cult of Athena Blades',
       },
     ],
@@ -54,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Cult of Athena Blades | Premium Swords, Katanas & Daggers',
     description: 'Discover premium quality swords, katanas, and daggers. Authentic blades for collectors, martial artists, and history enthusiasts.',
-    images: ['/images/og-image.jpg'],
+    images: ['/logo.png'],
   },
   robots: {
     index: true,
@@ -70,6 +74,10 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code',
   },
+  icons: {
+    icon: [{ url: '/logo.png', sizes: 'any', type: 'image/png' }],
+    apple: [{ url: '/logo.png', sizes: '180x180', type: 'image/png' }],
+  },
 };
 
 export default function RootLayout({
@@ -78,12 +86,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${inter.variable}`}>
+    <html lang="en" className={`${teko.variable} ${inter.variable}`}>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        {/* Favicon: point to /logo.png in public. If not present yet, copy assets/images/logo.png to public/logo.png */}
+        <link rel="icon" type="image/png" href="/logo.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>

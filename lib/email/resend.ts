@@ -132,8 +132,6 @@ export async function sendCustomerOrderConfirmation(order: {
   shipping_address: Record<string, any>;
   total_amount: number;
 }, items: OrderItemInput[]) {
-  const toEmail = (order.customer_email || '').trim();
-  if (!toEmail) return; // nothing to send
   const address = order.shipping_address || {};
 
   const itemsRows = items.map((it) => `
@@ -183,11 +181,20 @@ export async function sendCustomerOrderConfirmation(order: {
     </div>
   `;
 
+  const isTestSender = EMAIL_FROM.endsWith('@resend.dev');
+  const adminRecipients = (EMAIL_ORDERS_TO || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const to = isTestSender ? adminRecipients : [order.customer_email];
+
   await resend.emails.send({
     from: `${EMAIL_FROM_NAME} <${EMAIL_FROM}>`,
-    to: [toEmail],
-    bcc: EMAIL_ORDERS_TO ? EMAIL_ORDERS_TO.split(',').map((s) => s.trim()).filter(Boolean) : undefined,
-    subject: `Order Confirmation — ${order.order_number}`,
+    to,
+    // When using test sender, mirror to admin only so it passes Resend's restriction
+    subject: isTestSender
+      ? `Order Confirmation — ${order.order_number} (customer: ${order.customer_email})`
+      : `Order Confirmation — ${order.order_number}`,
     html,
   });
 }

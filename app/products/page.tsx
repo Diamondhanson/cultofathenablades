@@ -78,8 +78,8 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
                     className={styles.filterLink}
                   >
                     {category.name}
-                  </Link>
-                </li>
+                </Link>
+              </li>
               ))}
             </ul>
           </aside>
@@ -92,36 +92,41 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
                 <p>Check back soon for new additions to our collection!</p>
               </div>
             ) : (
-              <div className={styles.productGrid}>
+            <div className={styles.productGrid}>
                 {productsList.map((product) => (
-                  <div key={product.id} className={styles.productCard}>
-                    <Link href={routes.productDetail(product.id)} className={styles.productLink}>
-                      <div className={styles.productImage}>
-                        <Image
+                <div key={product.id} className={styles.productCard}>
+                  <Link href={routes.productDetail(product.id)} className={styles.productLink}>
+                    <div className={styles.productImage}>
+                      <Image
                           src={product.image_url}
                           alt={`${product.name} - Premium ${product.categories?.name || 'blade'}`}
-                          width={600}
-                          height={400}
-                          quality={85}
-                          loading="lazy"
-                          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                        />
+                        width={600}
+                        height={400}
+                        quality={85}
+                        loading="lazy"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                      />
                         {product.in_stock && (
-                          <span className={styles.badge}>In Stock</span>
-                        )}
+                        <span className={styles.badge}>In Stock</span>
+                      )}
                         {product.featured && (
                           <span className={styles.badge} style={{ left: '1rem', right: 'auto', background: '#d4af37' }}>
                             ⭐ Featured
                           </span>
                         )}
-                      </div>
-                      <div className={styles.productInfo}>
-                        <h3 className={styles.productName}>{product.name}</h3>
-                       
-                        <div className={styles.productFooter}>
+                    </div>
+                    <div className={styles.productInfo}>
+                      <h3 className={styles.productName}>{product.name}</h3>
+                      <div className={styles.productFooter}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span className={styles.productPrice}>${product.price}</span>
-                          <span className={styles.viewDetails}>View Details →</span>
+                          {product.original_price && product.original_price > product.price && (
+                            <span style={{ textDecoration: 'line-through', color: '#999' }}>${product.original_price}</span>
+                          )}
                         </div>
+                        <span className={styles.viewDetails}>View Details →</span>
+                      </div>
                         <div style={{ marginTop: '0.5rem' }}>
                           <AddToCartButton
                             id={product.id}
@@ -130,11 +135,11 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
                             image_url={product.image_url}
                           />
                         </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
             )}
           </div>
         </div>

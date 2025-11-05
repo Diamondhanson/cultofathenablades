@@ -11,6 +11,7 @@ export default function AddToCartButton({
   image_url,
   quantity = 1,
   fullWidth = false,
+  stopPropagation = true,
 }: {
   id: string;
   name: string;
@@ -18,12 +19,17 @@ export default function AddToCartButton({
   image_url?: string;
   quantity?: number;
   fullWidth?: boolean;
+  stopPropagation?: boolean;
 }) {
   const { addItem } = useCart();
   const [adding, setAdding] = useState(false);
   const { show } = useToast();
 
-  const onAdd = () => {
+  const onAdd: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    if (stopPropagation) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setAdding(true);
     try {
       addItem({ id, name, price, image_url }, quantity);

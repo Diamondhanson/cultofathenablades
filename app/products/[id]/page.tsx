@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/server';
 import ImageGallery from './ImageGallery';
 import type { Product } from '@/lib/types/database';
 import styles from './product.module.css';
+import homeStyles from '@/app/page.module.css';
 import AddToCartButton from '@/components/AddToCartButton';
 
 export const revalidate = 60;
@@ -62,9 +63,46 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
     ? [product.image_url, ...product.additional_images]
     : [product.image_url];
 
+  // JSON-LD Product schema
+  const aggregateRating = reviews && reviews.length > 0 ? {
+    '@type': 'AggregateRating',
+    ratingValue: Number(averageRating.toFixed(1)),
+    reviewCount: reviews.length,
+  } : undefined;
+
+  const offers = {
+    '@type': 'Offer',
+    priceCurrency: 'USD',
+    price: Number(product.price),
+    availability: product.in_stock ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock',
+  };
+
+  const productSchema = {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    name: product.name,
+    image: images,
+    description: product.description,
+    category: product.categories?.name || undefined,
+    offers,
+    ...(aggregateRating ? { aggregateRating } : {}),
+  };
+
+  // Related products (same category)
+  const { data: related } = await supabase
+    .from('products')
+    .select('*')
+    .eq('category_id', product.category_id)
+    .neq('id', product.id)
+    .limit(4);
+
   return (
     <div className={styles.page}>
       <div className="container">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        />
         <div className={styles.breadcrumb}>
           <Link href={routes.home}>Home</Link>
           <span>/</span>
@@ -103,6 +141,9 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
                 </>
               )}
             </div>
+            {product.notes && (
+              <p className={styles.description} style={{ marginTop: '-0.5rem' }}>{product.notes}</p>
+            )}
             {product.specifications && Object.keys(product.specifications).length > 0 && (
           <div className={styles.specifications} style={{ marginBottom: 'var(--spacing-2xl)' }}>
             <h2 className={styles.specificationsTitle}>Specifications</h2>
@@ -182,6 +223,47 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
               ))}
             </div>
           </div>
+        )}
+
+        {/* Related Products - reuse home page tiles */}
+        {related && related.length > 0 && (
+          <section style={{ padding: '2rem 0' }}>
+            <h2 className={styles.detailsTitle}>You Might Also Like</h2>
+            <div className={homeStyles.productGrid}>
+              {related.slice(0, 4).map((rp: any) => (
+                <div key={rp.id} className={homeStyles.productCard}>
+                  <Link href={routes.productDetail(rp.id)} className={homeStyles.productLink}>
+                    <div className={homeStyles.productImage}>
+                      <Image
+                        src={rp.image_url}
+                        alt={rp.name}
+                        width={600}
+                        height={400}
+                        quality={85}
+                        loading="lazy"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                      />
+                      <div className={homeStyles.productOverlay}>
+                        <Link href={routes.productDetail(rp.id)} className="btn btn-gold">
+                          View Details
+                        </Link>
+                      </div>
+                    </div>
+                    <div className={homeStyles.productInfo}>
+                      <h3 className={homeStyles.productName}>{rp.name}</h3>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <p className={homeStyles.productPrice} style={{ margin: 0 }}>${rp.price}</p>
+                        {rp.original_price && rp.original_price > rp.price && (
+                          <span style={{ textDecoration: 'line-through', color: '#999' }}>${rp.original_price}</span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
       </div>
     </div>

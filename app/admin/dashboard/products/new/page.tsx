@@ -33,7 +33,7 @@ export default function NewProductPage() {
     stock_quantity: '0',
     in_stock: true,
     featured: false,
-    specifications: '',
+    notes: '',
   });
 
   useEffect(() => {
@@ -150,45 +150,8 @@ export default function NewProductPage() {
       const imageUrl = await uploadMainImage();
       const additionalImages = await uploadSubImages();
 
-      // Parse specifications: accept JSON or simple key:value lines
-      const parseSpecificationsInput = (input: string): Record<string, any> | null => {
-        const trimmed = input.trim();
-        if (!trimmed) return null;
-        // Try JSON first
-        try {
-          const parsed = JSON.parse(trimmed);
-          if (parsed && typeof parsed === 'object') return parsed;
-        } catch {}
-        // Fallback: key:value per line
-        const lines = trimmed.split('\n').map((l) => l.trim()).filter(Boolean);
-        const result: Record<string, any> = {};
-        for (const line of lines) {
-          const parts = line.split(':');
-          if (parts.length < 2) continue;
-          const key = parts[0].trim();
-          const rawValue = parts.slice(1).join(':').trim();
-          if (!key) continue;
-          const toTyped = (val: string): any => {
-            const lower = val.toLowerCase();
-            if (lower === 'true') return true;
-            if (lower === 'false') return false;
-            if (!isNaN(Number(val)) && val !== '') return Number(val);
-            if (val.includes(',')) {
-              return val.split(',').map((s) => s.trim()).map((t) => {
-                const tl = t.toLowerCase();
-                if (tl === 'true') return true;
-                if (tl === 'false') return false;
-                return !isNaN(Number(t)) && t !== '' ? Number(t) : t;
-              });
-            }
-            return val;
-          };
-          result[key] = toTyped(rawValue);
-        }
-        return Object.keys(result).length ? result : null;
-      };
-
-      const specifications = parseSpecificationsInput(formData.specifications);
+      // Notes (simple text)
+      const notes = (formData.notes || '').trim() || null;
 
       const { error: insertError } = await supabase
         .from('products')
@@ -204,7 +167,7 @@ export default function NewProductPage() {
           stock_quantity: parseInt(formData.stock_quantity),
           in_stock: formData.in_stock,
           featured: formData.featured,
-          specifications,
+          notes,
         });
 
       if (insertError) throw insertError;
@@ -411,18 +374,17 @@ export default function NewProductPage() {
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="specifications" className={styles.label}>
-                  Specifications (JSON)
+                <label htmlFor="notes" className={styles.label}>
+                  Product Notes
                 </label>
                 <textarea
-                  id="specifications"
-                  name="specifications"
-                  value={formData.specifications}
+                  id="notes"
+                  name="notes"
+                  value={formData.notes}
                   onChange={handleChange}
                   className={styles.textarea}
-                  placeholder='{"blade_length": "28 inches", "material": "Damascus steel"}'
+                  placeholder="Any additional notes about this product (care, maker, edition, etc.)"
                 />
-                <span className={styles.helpText}>Enter specifications in JSON format</span>
               </div>
 
               <div style={{ display: 'flex', gap: '1.5rem' }}>

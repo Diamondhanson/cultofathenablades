@@ -97,13 +97,14 @@
   background-color: white;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.18);
   transition: all var(--transition-base);
+  clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
 }
 
 .productCard:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px) skewX(-1.5deg);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.22);
 }
 
 .productLink {

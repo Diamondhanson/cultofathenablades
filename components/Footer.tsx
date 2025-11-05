@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import logo from '@/assets/images/logo.png';
 import { footerLinks } from '@/config/routes';
 import styles from './Footer.module.css';
 
@@ -12,8 +14,7 @@ export default function Footer() {
           {/* Brand Section */}
           <div className={styles.brandSection}>
             <div className={styles.brand}>
-              <span className={styles.brandIcon}>⚔️</span>
-              <span className={styles.brandName}>Cult of Athena Blades</span>
+              <Image src={logo} alt="Cult of Athena Blades logo" width={100} height={100} style={{ objectFit: 'contain' }} />
             </div>
             <p className={styles.brandDescription}>
               Premium quality swords, katanas, and daggers for collectors, martial artists, and history enthusiasts. 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import heroImg from '@/assets/images/hero-image.jpg';
 import { routes } from '@/config/routes';
 import { generateStructuredData } from '@/functions/seo';
 import { createClient } from '@/lib/supabase/server';
@@ -11,12 +12,12 @@ export default async function HomePage() {
   const structuredData = generateStructuredData('organization', {});
   const supabase = await createClient();
 
-  // Fetch categories
+  // Fetch categories with images from the database (show only those that have images)
   const { data: categories } = await supabase
     .from('categories')
     .select('*')
-    .order('name')
-    .limit(3);
+    .not('image_url', 'is', null)
+    .order('name');
 
   // Fetch featured products
   const { data: featuredProducts } = await supabase
@@ -41,12 +42,12 @@ export default async function HomePage() {
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
-            <span className={styles.heroSubtitle}>Forge Your Legacy</span>
-            <span className={styles.heroMainTitle}>Master the Art of the Blade</span>
+            <span className={styles.heroSubtitle}>Honed in Tradition</span>
+            <span className={styles.heroMainTitle}>Cult of Athene Blades</span>
           </h1>
           <p className={styles.heroDescription}>
-            Discover authentic swords, katanas, and daggers crafted with centuries-old techniques. 
-            Premium quality blades for collectors, martial artists, and history enthusiasts.
+            Meticulously forged blades with elegant fittings and balanced steel—crafted for collectors and
+            practitioners who demand authenticity and performance.
           </p>
           <div className={styles.heroButtons}>
             <Link href={routes.products} className="btn btn-primary">
@@ -59,12 +60,13 @@ export default async function HomePage() {
         </div>
         <div className={styles.heroImage}>
           <Image
-            src="https://images.unsplash.com/photo-1592422546501-f5b4e2c5b9a4?q=80&w=2000&auto=format&fit=crop"
-            alt="Premium Japanese Katana with Traditional Sheath - Authentic Handcrafted Blade"
+            src={heroImg}
+            alt="Handcrafted katana on wooden stand with lacquered saya in a studio setting"
             width={2000}
             height={1200}
             priority
             quality={90}
+            sizes="100vw"
             style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           />
         </div>
@@ -82,17 +84,18 @@ export default async function HomePage() {
               <Link key={category.id} href={`${routes.products}?category=${category.slug}`} className={styles.categoryCard}>
                 <div className={styles.categoryImage}>
                   <Image
-                    src={category.image_url || 'https://images.unsplash.com/photo-1595433707802-6b2626ef1c91?q=80&w=800&auto=format&fit=crop'}
+                    src={category.image_url}
                     alt={`${category.name} - Premium Collection`}
                     width={800}
                     height={600}
                     quality={85}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
                     style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                   />
                 </div>
                 <div className={styles.categoryContent}>
                   <h3 className={styles.categoryTitle}>{category.name}</h3>
-                  <p className={styles.categoryDescription}>{category.description || `Explore our ${category.name.toLowerCase()} collection`}</p>
+                  <p className={styles.categoryDescription}>{category.description || ''}</p>
                 </div>
               </Link>
             ))}
@@ -119,6 +122,7 @@ export default async function HomePage() {
                       height={400}
                       quality={85}
                       loading="lazy"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                     />
                     <div className={styles.productOverlay}>
@@ -129,7 +133,12 @@ export default async function HomePage() {
                   </div>
                   <div className={styles.productInfo}>
                     <h3 className={styles.productName}>{product.name}</h3>
-                    <p className={styles.productPrice}>${product.price}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <p className={styles.productPrice} style={{ margin: 0 }}>${product.price}</p>
+                      {product.original_price && product.original_price > product.price && (
+                        <span style={{ textDecoration: 'line-through', color: '#999' }}>${product.original_price}</span>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

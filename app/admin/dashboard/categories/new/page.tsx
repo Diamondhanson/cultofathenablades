@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
-import styles from './form.module.css';
+import styles from '../form.module.css';
 
 export default function NewCategoryPage() {
   const router = useRouter();

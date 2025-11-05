@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { navigation, routes } from '@/config/routes';
+import Image from 'next/image';
+import logo from '@/assets/images/logo.png';
 import styles from './Navbar.module.css';
 import { useCart } from '@/lib/cart/CartProvider';
 
@@ -24,8 +26,7 @@ export default function Navbar() {
     <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <Link href={routes.home} className={styles.logo}>
-          <span className={styles.logoIcon}>⚔️</span>
-          <span className={styles.logoText}>Cult of Athena Blades</span>
+          <Image src={logo} alt="Cult of Athena Blades logo" width={90} height={90} style={{ objectFit: 'contain' }} />
         </Link>
 
         {/* Desktop Navigation */}
