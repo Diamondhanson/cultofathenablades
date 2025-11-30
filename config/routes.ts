@@ -35,3 +35,4 @@ export const footerLinks = {
 
 export type Route = typeof routes[keyof typeof routes];
 
+

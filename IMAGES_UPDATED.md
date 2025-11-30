@@ -100,3 +100,4 @@ All images are:
 
 **Your homepage now looks professional and showcases real weapons!** ⚔️
 
+

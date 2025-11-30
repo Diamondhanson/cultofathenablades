@@ -228,3 +228,4 @@ Everything is set up and optimized for SEO. Just run `npm install` and `npm run 
 
 **Built with precision and care, like the blades you'll be selling! ⚔️**
 
+

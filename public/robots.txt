@@ -12,3 +12,4 @@ Disallow: /order-confirmation
 # Crawl delay (optional)
 Crawl-delay: 1
 
+

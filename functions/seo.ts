@@ -117,3 +117,4 @@ export function generateStructuredData(type: 'organization' | 'product' | 'webpa
   }
 }
 
+
