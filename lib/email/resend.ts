@@ -37,7 +37,7 @@ export async function sendContactNotification(payload: {
   await resend.emails.send({
     from: EMAIL_FROM,
     to: EMAIL_CONTACT_TO.split(',').map((s) => s.trim()).filter(Boolean),
-    reply_to: EMAIL_REPLY_TO || payload.email,
+    replyTo: EMAIL_REPLY_TO || payload.email,
     subject: `[Contact] ${payload.subject}`,
     html,
   });
@@ -119,7 +119,7 @@ export async function sendOrderNotification(order: {
   await resend.emails.send({
     from: `${EMAIL_FROM_NAME} <${EMAIL_FROM}>`,
     to: EMAIL_ORDERS_TO.split(',').map((s) => s.trim()).filter(Boolean),
-    reply_to: EMAIL_REPLY_TO || order.customer_email,
+    replyTo: EMAIL_REPLY_TO || order.customer_email,
     subject: `[Order] ${order.order_number} - $${order.total_amount.toFixed(2)}`,
     html,
   });
