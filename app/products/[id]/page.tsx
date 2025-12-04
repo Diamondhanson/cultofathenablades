@@ -19,6 +19,14 @@ import AddToCartButton from '@/components/AddToCartButton';
 
 export const revalidate = 60;
 
+function plainTextToHtml(text: string) {
+  if (!text) return '';
+  const paragraphs = text.split(/\n{2,}/).map((para) =>
+    `<p>${para.replace(/\n/g, '<br />')}</p>`,
+  );
+  return paragraphs.join('');
+}
+
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const supabase = await createClient();
   const { data: product } = await supabase
@@ -162,7 +170,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
                         TableHeader,
                         TableCell,
                       ])
-                    : product.notes || '',
+                    : plainTextToHtml(product.notes || ''),
                 }}
               />
             ) : null}
@@ -234,7 +242,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
                     TableHeader,
                     TableCell,
                   ])
-                : product.description,
+                : plainTextToHtml(product.description),
             }}
           />
         </div>
