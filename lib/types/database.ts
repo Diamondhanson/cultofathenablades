@@ -13,6 +13,7 @@ export interface Product {
   name: string;
   slug: string;
   description: string;
+  description_rich?: Record<string, any> | null;
   price: number;
   original_price?: number; // Optional: show discount if present and > price
   category_id: string;
@@ -22,6 +23,8 @@ export interface Product {
   stock_quantity: number;
   featured: boolean;
   specifications?: Record<string, any>;
+  notes?: string | null;
+  notes_rich?: Record<string, any> | null;
   created_at: string;
   updated_at: string;
 }

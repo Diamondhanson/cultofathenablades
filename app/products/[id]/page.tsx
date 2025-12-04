@@ -7,6 +7,12 @@ import { routes } from '@/config/routes';
 import { createClient } from '@/lib/supabase/server';
 import ImageGallery from './ImageGallery';
 import type { Product } from '@/lib/types/database';
+import { generateHTML } from '@tiptap/html';
+import StarterKit from '@tiptap/starter-kit';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
+import TableCell from '@tiptap/extension-table-cell';
 import styles from './product.module.css';
 import homeStyles from '@/app/page.module.css';
 import AddToCartButton from '@/components/AddToCartButton';
@@ -141,9 +147,25 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
                 </>
               )}
             </div>
-            {product.notes && (
-              <p className={styles.description} style={{ marginTop: '-0.5rem' }}>{product.notes}</p>
-            )}
+            {product.notes_rich || product.notes ? (
+              <div
+                className={styles.description}
+                style={{ marginTop: '-0.5rem' }}
+                dangerouslySetInnerHTML={{
+                  __html: product.notes_rich
+                    ? generateHTML(product.notes_rich as any, [
+                        StarterKit.configure({
+                          heading: { levels: [2, 3, 4] },
+                        }),
+                        Table.configure({ resizable: true }),
+                        TableRow,
+                        TableHeader,
+                        TableCell,
+                      ])
+                    : product.notes || '',
+                }}
+              />
+            ) : null}
             {product.specifications && Object.keys(product.specifications).length > 0 && (
           <div className={styles.specifications} style={{ marginBottom: 'var(--spacing-2xl)' }}>
             <h2 className={styles.specificationsTitle}>Specifications</h2>
@@ -199,9 +221,22 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
         {/* Detailed Description */}
         <div className={styles.details}>
           <h2 className={styles.detailsTitle}>Product Details</h2>
-          <div className={styles.detailsContent}>
-            <p>{product.description}</p>
-          </div>
+          <div
+            className={styles.detailsContent}
+            dangerouslySetInnerHTML={{
+              __html: (product as any).description_rich
+                ? generateHTML((product as any).description_rich, [
+                    StarterKit.configure({
+                      heading: { levels: [2, 3, 4] },
+                    }),
+                    Table.configure({ resizable: true }),
+                    TableRow,
+                    TableHeader,
+                    TableCell,
+                  ])
+                : product.description,
+            }}
+          />
         </div>
 
         

@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS products (
   name TEXT NOT NULL,
   slug TEXT NOT NULL UNIQUE,
   description TEXT NOT NULL,
+  description_rich JSONB,
   price DECIMAL(10, 2) NOT NULL,
   category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
   image_url TEXT NOT NULL,
@@ -37,6 +38,8 @@ CREATE TABLE IF NOT EXISTS products (
   stock_quantity INTEGER DEFAULT 0,
   featured BOOLEAN DEFAULT false,
   specifications JSONB DEFAULT '{}',
+  notes TEXT,
+  notes_rich JSONB,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -138,6 +141,12 @@ CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
 CREATE INDEX IF NOT EXISTS idx_blog_posts_published ON blog_posts(published);
 CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON blog_posts(slug);
 CREATE INDEX IF NOT EXISTS idx_contact_status ON contact_submissions(status);
+
+-- Ensure rich text columns exist on products (safe to run multiple times)
+ALTER TABLE products
+  ADD COLUMN IF NOT EXISTS notes TEXT,
+  ADD COLUMN IF NOT EXISTS description_rich JSONB,
+  ADD COLUMN IF NOT EXISTS notes_rich JSONB;
 
 -- =====================================================
 -- UPDATED_AT TRIGGER FUNCTION

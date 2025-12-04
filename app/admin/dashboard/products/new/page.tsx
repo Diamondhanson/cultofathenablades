@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 import type { Category } from '@/lib/types/database';
+import RichTextEditor from '@/components/RichTextEditor';
 import styles from '../../categories/form.module.css';
 
 export default function NewProductPage() {
@@ -26,15 +27,18 @@ export default function NewProductPage() {
   const [formData, setFormData] = useState({
     name: '',
     slug: '',
-    description: '',
     price: '',
     original_price: '',
     category_id: '',
     stock_quantity: '0',
     in_stock: true,
     featured: false,
-    notes: '',
   });
+
+  const [descriptionRich, setDescriptionRich] = useState<Record<string, any> | null>(null);
+  const [descriptionText, setDescriptionText] = useState('');
+  const [notesRich, setNotesRich] = useState<Record<string, any> | null>(null);
+  const [notesText, setNotesText] = useState('');
 
   useEffect(() => {
     loadCategories();
@@ -48,7 +52,7 @@ export default function NewProductPage() {
     setCategories(data || []);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
     
@@ -151,14 +155,20 @@ export default function NewProductPage() {
       const additionalImages = await uploadSubImages();
 
       // Notes (simple text)
-      const notes = (formData.notes || '').trim() || null;
+      const description = descriptionText.trim();
+      if (!description) {
+        throw new Error('Please add a product description');
+      }
+
+      const notes = notesText.trim() || null;
 
       const { error: insertError } = await supabase
         .from('products')
         .insert({
           name: formData.name,
           slug: formData.slug,
-          description: formData.description,
+          description,
+          description_rich: descriptionRich,
           price: parseFloat(formData.price),
           original_price: formData.original_price ? parseFloat(formData.original_price) : null,
           category_id: formData.category_id || null,
@@ -168,6 +178,7 @@ export default function NewProductPage() {
           in_stock: formData.in_stock,
           featured: formData.featured,
           notes,
+          notes_rich: notesRich,
         });
 
       if (insertError) throw insertError;
@@ -377,11 +388,13 @@ export default function NewProductPage() {
                 <label htmlFor="notes" className={styles.label}>
                   Product Notes
                 </label>
-                <textarea
+                <RichTextEditor
                   id="notes"
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleChange}
+                  value={notesRich}
+                  onChange={({ doc, text }) => {
+                    setNotesRich(doc);
+                    setNotesText(text);
+                  }}
                   className={styles.textarea}
                   placeholder="Any additional notes about this product (care, maker, edition, etc.)"
                 />
@@ -418,13 +431,15 @@ export default function NewProductPage() {
             <label htmlFor="description" className={styles.label}>
               Description <span className={styles.required}>*</span>
             </label>
-            <textarea
+            <RichTextEditor
               id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
+              value={descriptionRich}
+              onChange={({ doc, text }) => {
+                setDescriptionRich(doc);
+                setDescriptionText(text);
+              }}
               className={styles.textarea}
-              required
+              placeholder="Add headings, bullet lists, tables, and more. Pasting from Word/Docs is supported."
             />
           </div>
 
