@@ -26,6 +26,14 @@ export default function RichTextEditor({
   className,
   placeholder,
 }: RichTextEditorProps) {
+  const attributes: Record<string, string> = {
+    class: 'rich-text-editor-content',
+  };
+
+  if (id) {
+    attributes.id = id;
+  }
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -50,11 +58,7 @@ export default function RichTextEditor({
       onChange({ doc, text });
     },
     editorProps: {
-      attributes: {
-        id,
-        class:
-          'rich-text-editor-content',
-      },
+      attributes,
     },
   });
 
