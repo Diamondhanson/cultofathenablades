@@ -228,7 +228,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
 
         {/* Detailed Description */}
         <div className={styles.details}>
-          <h2 className={styles.detailsTitle}>Product Details</h2>
+          <h2 className={styles.detailsTitle}>Product Description</h2>
           <div
             className={styles.detailsContent}
             dangerouslySetInnerHTML={{
