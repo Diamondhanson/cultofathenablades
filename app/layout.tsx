@@ -76,8 +76,12 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code',
   },
   icons: {
-    icon: [{ url: '/logo.png', sizes: 'any', type: 'image/png' }],
-    apple: [{ url: '/logo.png', sizes: '180x180', type: 'image/png' }],
+    icon: [
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any', type: 'image/x-icon' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
 };
 
@@ -89,8 +93,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${teko.variable} ${inter.variable}`}>
       <head>
-        {/* Favicon: point to /logo.png in public. If not present yet, copy assets/images/logo.png to public/logo.png */}
-        <link rel="icon" type="image/png" href="/logo.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>
