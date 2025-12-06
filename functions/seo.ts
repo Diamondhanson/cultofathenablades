@@ -69,7 +69,7 @@ export function generateStructuredData(type: 'organization' | 'product' | 'webpa
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'Customer Service',
-          email: 'info@cultofathenablades.com',
+          email: 'cultofathenablades@gmail.com',
         },
         ...data,
       };

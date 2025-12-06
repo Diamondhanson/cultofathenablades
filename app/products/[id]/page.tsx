@@ -16,6 +16,7 @@ import TableCell from '@tiptap/extension-table-cell';
 import styles from './product.module.css';
 import homeStyles from '@/app/page.module.css';
 import AddToCartButton from '@/components/AddToCartButton';
+import ProductReviewForm from '@/components/ProductReviewForm';
 
 export const revalidate = 60;
 
@@ -250,23 +251,30 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
         
 
         {/* Reviews Section */}
-        {reviews && reviews.length > 0 && (
-          <div className={styles.reviews}>
-            <h2 className={styles.reviewsTitle}>Customer Reviews</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div className={styles.reviews}>
+          <h2 className={styles.reviewsTitle}>Customer Reviews</h2>
+          {reviews && reviews.length > 0 ? (
+            <div className={styles.reviewsList}>
               {reviews.map((review) => (
-                <div key={review.id} style={{ background: '#f9f9f9', padding: '1.5rem', borderRadius: '8px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                <div key={review.id} className={styles.reviewCard}>
+                  <div className={styles.reviewHeader}>
                     <strong>{review.customer_name}</strong>
-                    <span>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</span>
+                    <span className={styles.reviewStars}>
+                      {'★'.repeat(review.rating)}
+                      {'☆'.repeat(5 - review.rating)}
+                    </span>
                   </div>
-                  {review.title && <h4 style={{ margin: '0.5rem 0' }}>{review.title}</h4>}
-                  <p style={{ color: '#666', margin: 0 }}>{review.comment}</p>
+                  {review.title && <h4 className={styles.reviewTitle}>{review.title}</h4>}
+                  <p className={styles.reviewComment}>{review.comment}</p>
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <p className={styles.noReviews}>No reviews yet. Be the first to review this blade.</p>
+          )}
+
+          <ProductReviewForm productId={product.id} productName={product.name} />
+        </div>
 
         {/* Related Products - reuse home page tiles */}
         {related && related.length > 0 && (

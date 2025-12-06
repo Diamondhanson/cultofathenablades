@@ -32,7 +32,7 @@ export default function ContactPage() {
             <div className={styles.infoCard}>
               <div className={styles.icon}>📧</div>
               <h3 className={styles.infoTitle}>Email</h3>
-              <p className={styles.infoText}>info@cultofathenablades.com</p>
+              <p className={styles.infoText}>cultofathenablades@gmail.com</p>
               <p className={styles.infoSubtext}>We respond within 24 hours</p>
             </div>
 
@@ -47,9 +47,9 @@ export default function ContactPage() {
               <div className={styles.icon}>📍</div>
               <h3 className={styles.infoTitle}>Address</h3>
               <p className={styles.infoText}>
-                123 Forge Street<br />
-                Craftsman District<br />
-                New York, NY 10001
+                Marina Club<br />
+                5401 Overton Ridge Fort Worth<br />
+                Texas, TX 76123
               </p>
             </div>
 
@@ -58,7 +58,7 @@ export default function ContactPage() {
               <h3 className={styles.infoTitle}>Business Hours</h3>
               <p className={styles.infoText}>
                 Monday - Friday: 9am - 6pm<br />
-                Saturday: 10am - 4pm<br />
+                Saturday: 10am - 2pm<br />
                 Sunday: Closed
               </p>
             </div>
@@ -71,28 +71,28 @@ export default function ContactPage() {
             <div className={styles.faqItem}>
               <h3 className={styles.faqQuestion}>Are these real swords?</h3>
               <p className={styles.faqAnswer}>
-                Yes, all our swords are functional replicas made with authentic materials and traditional techniques. 
+                Yes, all our swords are functional replicas made with authentic materials and traditional techniques.
                 They are suitable for display, collection, and martial arts practice.
               </p>
             </div>
             <div className={styles.faqItem}>
               <h3 className={styles.faqQuestion}>What is your return policy?</h3>
               <p className={styles.faqAnswer}>
-                We offer a 30-day return policy for all unused items in original condition. 
+                We offer a 30-day return policy for all unused items in original condition.
                 Please contact us before initiating a return.
               </p>
             </div>
             <div className={styles.faqItem}>
               <h3 className={styles.faqQuestion}>How long does shipping take?</h3>
               <p className={styles.faqAnswer}>
-                Domestic orders typically arrive within 5-7 business days. 
+                Domestic orders typically arrive within 5-7 business days.
                 International shipping varies by location, usually 10-21 days.
               </p>
             </div>
             <div className={styles.faqItem}>
               <h3 className={styles.faqQuestion}>Do you ship internationally?</h3>
               <p className={styles.faqAnswer}>
-                Yes, we ship worldwide! However, please check your local laws regarding blade ownership 
+                Yes, we ship worldwide! However, please check your local laws regarding blade ownership
                 and importation before ordering.
               </p>
             </div>

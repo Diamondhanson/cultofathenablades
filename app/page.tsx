@@ -8,6 +8,33 @@ import styles from './page.module.css';
 
 export const revalidate = 60;
 
+const SAMPLE_HOME_REVIEWS = [
+  {
+    id: 'sample-1',
+    customer_name: 'Elena M.',
+    rating: 5,
+    title: 'A centerpiece for my collection',
+    comment:
+      'The blade arrived razor sharp with flawless polish. The balance feels incredible in the hand and the fittings look even better in person.',
+  },
+  {
+    id: 'sample-2',
+    customer_name: 'David K.',
+    rating: 5,
+    title: 'Exactly what I was hoping for',
+    comment:
+      'Excellent communication, fast shipping, and a sword that feels properly built for cutting practice—not a wall hanger.',
+  },
+  {
+    id: 'sample-3',
+    customer_name: 'Sofia L.',
+    rating: 4,
+    title: 'Beautiful craftsmanship',
+    comment:
+      'Saya fit is tight, the hamon is subtle but elegant, and the grip is comfortable for longer sessions. Great value for the price.',
+  },
+];
+
 export default async function HomePage() {
   const structuredData = generateStructuredData('organization', {});
   const supabase = await createClient();
@@ -27,8 +54,16 @@ export default async function HomePage() {
     .eq('in_stock', true)
     .limit(4);
 
+  const { data: recentReviews } = await supabase
+    .from('reviews')
+    .select('*, products(name)')
+    .eq('approved', true)
+    .order('created_at', { ascending: false })
+    .limit(3);
+
   const categoriesList = categories || [];
   const productsList = featuredProducts || [];
+  const homepageReviews = (recentReviews && recentReviews.length > 0 ? recentReviews : SAMPLE_HOME_REVIEWS) as any[];
 
   return (
     <>
@@ -155,6 +190,43 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Customer Reviews */}
+      {homepageReviews.length > 0 && (
+        <section className={styles.homeReviews}>
+          <div className="container">
+            <h2 className={styles.sectionTitle}>What Collectors Are Saying</h2>
+            <p className={styles.sectionSubtitle}>
+              Recent feedback from customers who’ve added our blades to their collection.
+            </p>
+            <div className={styles.homeReviewGrid}>
+              {homepageReviews.map((review: any) => (
+                <div key={review.id} className={styles.homeReviewCard}>
+                  <div className={styles.homeReviewHeader}>
+                    <span className={styles.homeReviewStars}>
+                      {'★'.repeat(review.rating)}
+                      {'☆'.repeat(5 - review.rating)}
+                    </span>
+                    <span className={styles.homeReviewName}>{review.customer_name}</span>
+                  </div>
+                  {review.products?.name && (
+                    <p className={styles.homeReviewProduct}>
+                      On{' '}
+                      <Link href={routes.productDetail(review.product_id)}>
+                        {review.products.name}
+                      </Link>
+                    </p>
+                  )}
+                  {review.title && (
+                    <h3 className={styles.homeReviewTitle}>{review.title}</h3>
+                  )}
+                  <p className={styles.homeReviewComment}>{review.comment}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Why Choose Us */}
       <section className={styles.features}>

@@ -276,6 +276,65 @@
   margin-top: var(--spacing-2xl);
 }
 
+/* Home Reviews */
+.homeReviews {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--background-alt);
+}
+
+.homeReviewGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-2xl);
+}
+
+@media (min-width: 768px) {
+  .homeReviewGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.homeReviewCard {
+  background-color: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.homeReviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.homeReviewStars {
+  color: var(--accent-gold);
+  font-size: var(--font-size-lg);
+}
+
+.homeReviewName {
+  font-weight: var(--font-weight-semibold);
+}
+
+.homeReviewProduct {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.homeReviewTitle {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-base);
+}
+
+.homeReviewComment {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
 /* Features Section */
 .features {
   padding: var(--spacing-3xl) 0;

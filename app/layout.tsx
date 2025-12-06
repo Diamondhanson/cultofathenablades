@@ -5,6 +5,7 @@ import { CartProvider } from '@/lib/cart/CartProvider';
 import { ToastProvider } from '@/lib/ui/ToastProvider';
 import Footer from '@/components/Footer';
 import '@/styles/globals.css';
+import AgeGate from '@/components/AgeGate';
 
 const teko = Teko({
   subsets: ['latin'],
@@ -102,6 +103,7 @@ export default function RootLayout({
             <Footer />
           </ToastProvider>
         </CartProvider>
+        <AgeGate />
       </body>
     </html>
   );

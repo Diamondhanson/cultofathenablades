@@ -2,11 +2,14 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const EMAIL_FROM = process.env.EMAIL_FROM || 'onboarding@resend.dev';
+// Default sender/recipient email for production
+const DEFAULT_PROJECT_EMAIL = 'cultofathenablades@gmail.com';
+
+const EMAIL_FROM = process.env.EMAIL_FROM || DEFAULT_PROJECT_EMAIL;
 const EMAIL_FROM_NAME = process.env.EMAIL_FROM_NAME || 'Cult of Athena Blades';
-const EMAIL_CONTACT_TO = process.env.EMAIL_CONTACT_TO || '';
-const EMAIL_ORDERS_TO = process.env.EMAIL_ORDERS_TO || '';
-const EMAIL_REPLY_TO = process.env.EMAIL_REPLY_TO || '';
+const EMAIL_CONTACT_TO = process.env.EMAIL_CONTACT_TO || DEFAULT_PROJECT_EMAIL;
+const EMAIL_ORDERS_TO = process.env.EMAIL_ORDERS_TO || DEFAULT_PROJECT_EMAIL;
+const EMAIL_REPLY_TO = process.env.EMAIL_REPLY_TO || DEFAULT_PROJECT_EMAIL;
 const BRAND = 'Cult of Athena Blades';
 
 function escapeHtml(str: string) {

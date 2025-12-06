@@ -218,6 +218,60 @@
   margin-bottom: var(--spacing-md);
 }
 
+.reviews {
+  padding: var(--spacing-2xl);
+  background-color: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.reviewsTitle {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.reviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.reviewCard {
+  background-color: var(--background-alt);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.reviewStars {
+  color: var(--accent-gold);
+  font-size: var(--font-size-lg);
+}
+
+.reviewTitle {
+  margin: var(--spacing-xs) 0;
+  font-size: var(--font-size-base);
+}
+
+.reviewComment {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.noReviews {
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
 .specifications {
   padding: var(--spacing-2xl);
   background-color: var(--background-alt);
