@@ -95,7 +95,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
             <div className={styles.productGrid}>
                 {productsList.map((product) => (
                 <div key={product.id} className={styles.productCard}>
-                  <Link href={routes.productDetail(product.id)} className={styles.productLink}>
+                  <Link href={routes.productDetail(product.slug)} className={styles.productLink}>
                     <div className={styles.productImage}>
                       <Image
                           src={product.image_url}

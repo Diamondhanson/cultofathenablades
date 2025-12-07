@@ -16,12 +16,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch product pages
   const { data: products } = await supabase
     .from('products')
-    .select('id, updated_at')
+    .select('slug, updated_at')
     .eq('in_stock', true)
     .limit(500);
 
-  const productRoutes: MetadataRoute.Sitemap = (products || []).map((p) => ({
-    url: `${base}/products/${p.id}`,
+  const productRoutes: MetadataRoute.Sitemap = (products || []).map((p: any) => ({
+    url: `${base}/products/${p.slug}`,
     lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
   }));
 

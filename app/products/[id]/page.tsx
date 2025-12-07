@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   const { data: product } = await supabase
     .from('products')
     .select('*')
-    .eq('id', params.id)
+    .eq('slug', params.id)
     .single();
 
   if (!product) {
@@ -56,7 +56,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
   const { data: product } = await supabase
     .from('products')
     .select('*, categories(*)')
-    .eq('id', params.id)
+    .eq('slug', params.id)
     .single();
 
   if (!product) {
@@ -67,7 +67,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
   const { data: reviews } = await supabase
     .from('reviews')
     .select('*')
-    .eq('product_id', params.id)
+    .eq('product_id', product.id)
     .eq('approved', true);
 
   const averageRating = reviews && reviews.length > 0

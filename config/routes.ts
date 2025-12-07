@@ -1,7 +1,7 @@
 export const routes = {
   home: '/',
   products: '/products',
-  productDetail: (id: string) => `/products/${id}`,
+  productDetail: (slug: string) => `/products/${slug}`,
   cart: '/cart',
   checkout: '/checkout',
   orderConfirmation: (orderId: string) => `/order-confirmation/${orderId}`,

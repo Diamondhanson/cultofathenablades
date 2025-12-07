@@ -56,7 +56,7 @@ export default async function HomePage() {
 
   const { data: recentReviews } = await supabase
     .from('reviews')
-    .select('*, products(name)')
+    .select('*, products(name, slug)')
     .eq('approved', true)
     .order('created_at', { ascending: false })
     .limit(3);
@@ -161,7 +161,7 @@ export default async function HomePage() {
                       style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                     />
                     <div className={styles.productOverlay}>
-                      <Link href={routes.productDetail(product.id)} className="btn btn-gold">
+                      <Link href={routes.productDetail(product.slug)} className="btn btn-gold">
                         View Details
                       </Link>
                     </div>
@@ -212,7 +212,7 @@ export default async function HomePage() {
                   {review.products?.name && (
                     <p className={styles.homeReviewProduct}>
                       On{' '}
-                      <Link href={routes.productDetail(review.product_id)}>
+                      <Link href={routes.productDetail(review.products?.slug || '')}>
                         {review.products.name}
                       </Link>
                     </p>
