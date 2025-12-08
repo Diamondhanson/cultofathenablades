@@ -283,7 +283,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
             <div className={homeStyles.productGrid}>
               {related.slice(0, 4).map((rp: any) => (
                 <div key={rp.id} className={homeStyles.productCard}>
-                  <Link href={routes.productDetail(rp.id)} className={homeStyles.productLink}>
+                  <Link href={routes.productDetail(rp.slug)} className={homeStyles.productLink}>
                     <div className={homeStyles.productImage}>
                       <Image
                         src={rp.image_url}
@@ -296,7 +296,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
                         style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                       />
                       <div className={homeStyles.productOverlay}>
-                        <Link href={routes.productDetail(rp.id)} className="btn btn-gold">
+                        <Link href={routes.productDetail(rp.slug)} className="btn btn-gold">
                           View Details
                         </Link>
                       </div>
