@@ -18,7 +18,7 @@ export const revalidate = 60; // Revalidate every 60 seconds
 
 type ProductWithCategory = Product & { categories?: Category };
 
-export default async function ProductsPage({ searchParams }: { searchParams: { category?: string } }) {
+export default async function ProductsPage({ searchParams }: { searchParams: { category?: string; q?: string } }) {
   const supabase = await createClient();
   
   // Fetch categories for the sidebar
@@ -27,7 +27,9 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
     .select('*')
     .order('name');
 
-  // Fetch products with optional category filter
+  const searchQuery = (searchParams.q || '').trim();
+
+  // Fetch products with optional category + name filter
   let query = supabase
     .from('products')
     .select('*, categories(*)')
@@ -45,6 +47,10 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
     if (categoryData) {
       query = query.eq('category_id', categoryData.id);
     }
+  }
+
+  if (searchQuery) {
+    query = query.ilike('name', `%${searchQuery}%`);
   }
 
   const { data: products } = await query;
@@ -86,6 +92,23 @@ export default async function ProductsPage({ searchParams }: { searchParams: { c
 
           {/* Products Grid */}
           <div className={styles.main}>
+            <form
+              method="GET"
+              className={styles.searchBar}
+            >
+              <input
+                type="text"
+                name="q"
+                defaultValue={searchQuery}
+                placeholder="Search blades by name..."
+                className={styles.searchInput}
+              />
+              {/* Preserve category filter when searching */}
+              {searchParams.category && (
+                <input type="hidden" name="category" value={searchParams.category} />
+              )}
+            </form>
+
             {productsList.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '3rem', color: '#666' }}>
                 <p style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>No products found</p>
