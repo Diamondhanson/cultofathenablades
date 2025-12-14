@@ -190,7 +190,7 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
         )}
             {product.in_stock ? (
               <div className={styles.stock}>
-                <span className={styles.inStock}>✓ In Stock ({product.stock_quantity} available)</span>
+                <span className={styles.inStock}>✓ In Stock</span>
                 <span className={styles.shipping}>Free shipping on orders over $200</span>
               </div>
             ) : (
